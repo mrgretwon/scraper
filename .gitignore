@@ -1,4 +1,4 @@
 rest_api/rest
-scrapy_blog/blogenv
+scraper_blog/blogenv
 **/*.pyc
 **/.idea
