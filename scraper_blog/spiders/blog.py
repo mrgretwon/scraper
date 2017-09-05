@@ -11,7 +11,10 @@ class BlogSpider(BaseSpider):
     start_urls = [
         "https://teonite.com/blog/kickstarter-we-are-a-backer/",
     ]
-    dane_list_xpath = '//main[@class="content"]/article/section[@class="post-content"]'
+
+    # Uzywane sciezki xpath
+    dane_lista = '//main[@class="content"]/article/section[@class="post-content"]'
+    nast_strona = '//main[@class="content"]/ul/li[@class="pull-right"]/a/@href'
     item_fields = {
         'text': '//p/text()',
         'author': '//span[@class="author-content"]/h4/text()'
@@ -22,7 +25,7 @@ class BlogSpider(BaseSpider):
         selector = HtmlXPathSelector(response)
 
         # iterate over deals
-        for dane in selector.select(self.dane_list_xpath):
+        for dane in selector.select(self.dane_lista):
             loader = XPathItemLoader(TeoniteItem(), selector=dane)
 
             # define processors
@@ -34,5 +37,5 @@ class BlogSpider(BaseSpider):
                 loader.add_xpath(field, xpath)
             yield loader.load_item()
 
-        for nastepna in response.xpath('//main[@class="content"]/ul/li[@class="pull-right"]/a/@href').extract():
+        for nastepna in selector.select(self.nast_strona):
             yield response.follow(nastepna, callback=self.parse)
