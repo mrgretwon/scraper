@@ -1,5 +1,5 @@
 before_script:
-- pip install docker
+- docker info
 
 build:
   stage: build
