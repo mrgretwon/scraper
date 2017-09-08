@@ -17,7 +17,7 @@ def db_connect():
 
 
 def create_dane_table(engine):
-    """"""
+
     DeclarativeBase.metadata.create_all(engine)
 
 

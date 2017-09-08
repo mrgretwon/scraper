@@ -3,7 +3,6 @@ from models import Dane, db_connect, create_dane_table
 
 
 class TeonitePipeline(object):
-    """Teonite pipeline for storing scraped items in the database"""
 
     def __init__(self):
         """
@@ -17,8 +16,6 @@ class TeonitePipeline(object):
     def process_item(self, item, spider):
         """
         Zapisuje zebrane itemy przez spidera w bazie.
-
-        This method is called for every item pipeline component.
 
         """
         session = self.Session()

@@ -9,7 +9,7 @@ ROBOTSTXT_OBEY = True
 
 DATABASE = {
     'drivername': 'postgres',
-    'host': 'localhost',
+    'host': 'db',
     'port': '5432',
     'username': 'postgres',
     'password': 'bla1bla2',

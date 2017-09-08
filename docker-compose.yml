@@ -1,0 +1,23 @@
+version: "2"
+services:
+  scraper:
+    command: scrapy crawl blog
+    build: ./scraper
+    depends_on:
+      - db
+
+  api:
+    build: ./rest_api
+    ports:
+      - "8080:8080"
+    command: python3 manage.py runserver 0.0.0.0:8080
+    depends_on:
+      - db
+      - scraper
+
+  db:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=bla1bla2
+      - POSTGRES_DB=scrape

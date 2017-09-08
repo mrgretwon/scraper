@@ -24,15 +24,14 @@ class BlogSpider(BaseSpider):
 
         selector = HtmlXPathSelector(response)
 
-        # iterate over deals
+        # iteracja przez dane_lista
         for dane in selector.select(self.dane_lista):
             loader = XPathItemLoader(TeoniteItem(), selector=dane)
 
-            # define processors
             loader.default_input_processor = MapCompose(unicode.strip)
             loader.default_output_processor = Join()
 
-            # iterate over fields and add xpaths to the loader
+            # dodawanie xpath do loadera
             for field, xpath in self.item_fields.iteritems():
                 loader.add_xpath(field, xpath)
             yield loader.load_item()

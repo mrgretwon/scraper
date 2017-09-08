@@ -6,7 +6,7 @@ from collections import OrderedDict
 from rest_framework.response import Response
 from trans import trans
 import re
-
+from rest_framework import status
 
 # Widok zwracajacy statystyki przy zapytaniu /stats/
 
@@ -37,6 +37,12 @@ class Author(APIView):
             keys.append(trans(a).lower().replace(" ", ""))
 
         dictionary = dict(zip(keys, values))
+
+        # Jesli autor nie istnieje zwroci blad
+
+        if not cos in dictionary.keys():
+            content = 'Podany autor nie istnieje'
+            return Response(content, status=status.HTTP_404_NOT_FOUND)
 
         # Zamiana zapytania na dane autora
 
