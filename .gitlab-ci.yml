@@ -1,7 +1,10 @@
+services:
+  - docker:dind
+
 before_script:
   - docker info
 
 build_image:
   script:
-    - docker build -t api /rest_api
+    - docker build -t api rest_api/
     - docker run api
