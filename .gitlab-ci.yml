@@ -1,10 +1,10 @@
 image: docker:latest
 
 before_script:
-- docker info
+- sudo docker info
 
 build:
   stage: build
   script:
-  - docker build -t api rest_api/
-  - docker run api
+  - sudo docker build -t api rest_api/
+  - sudo docker run api
