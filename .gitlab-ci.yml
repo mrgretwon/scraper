@@ -8,7 +8,6 @@ build:
   - docker build -t api rest_api/
   - docker tag api grzlucki/api
   - docker push grzlucki/api
-  - docker run grzlucki/api
 
   - docker build -t scraper scraper/
   - docker tag scraper grzlucki/scraper
@@ -18,4 +17,4 @@ test:
   stage: test
   script:
     - cd rest_api
-    - python manage.py test
+    - python3 manage.py test

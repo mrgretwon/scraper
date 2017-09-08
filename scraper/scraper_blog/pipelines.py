@@ -1,28 +1,28 @@
 from sqlalchemy.orm import sessionmaker
-from models import Dane, db_connect, create_dane_table
+from .models import Data, db_connect, create_data_table
 
 
 class TeonitePipeline(object):
 
     def __init__(self):
         """
-        Inicjalizacja polaczenia z baza i
-        stworzenie tabeli dane
+        Creating session
+        and table in database
         """
         engine = db_connect()
-        create_dane_table(engine)
+        create_data_table(engine)
         self.Session = sessionmaker(bind=engine)
 
     def process_item(self, item, spider):
         """
-        Zapisuje zebrane itemy przez spidera w bazie.
+        Save scraped data to database
 
         """
         session = self.Session()
-        dane = Dane(**item)
+        data = Data(**item)
 
         try:
-            session.add(dane)
+            session.add(data)
             session.commit()
         except:
             session.rollback()

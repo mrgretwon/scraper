@@ -12,9 +12,9 @@ class BlogSpider(BaseSpider):
         "https://teonite.com/blog/kickstarter-we-are-a-backer/",
     ]
 
-    # Uzywane sciezki xpath
-    dane_lista = '//main[@class="content"]/article/section[@class="post-content"]'
-    nast_strona = '//main[@class="content"]/ul/li[@class="pull-right"]/a/@href'
+    # searching data with xpath
+    data_list = '//main[@class="content"]/article/section[@class="post-content"]'
+    next_page = '//main[@class="content"]/ul/li[@class="pull-right"]/a/@href'
     item_fields = {
         'text': '//p/text()',
         'author': '//span[@class="author-content"]/h4/text()'
@@ -24,17 +24,17 @@ class BlogSpider(BaseSpider):
 
         selector = HtmlXPathSelector(response)
 
-        # iteracja przez dane_lista
-        for dane in selector.select(self.dane_lista):
-            loader = XPathItemLoader(TeoniteItem(), selector=dane)
+        # iterate over data_list
+        for data in selector.select(self.data_list):
+            loader = XPathItemLoader(TeoniteItem(), selector=data)
 
-            loader.default_input_processor = MapCompose(unicode.strip)
+            loader.default_input_processor = MapCompose(str.strip)
             loader.default_output_processor = Join()
 
-            # dodawanie xpath do loadera
-            for field, xpath in self.item_fields.iteritems():
+            # add xpath to loader
+            for field, xpath in self.item_fields.items():
                 loader.add_xpath(field, xpath)
             yield loader.load_item()
 
-        for nastepna in selector.select(self.nast_strona):
-            yield response.follow(nastepna, callback=self.parse)
+        for nextp in selector.select(self.next_page):
+            yield response.follow(nextp, callback=self.parse)

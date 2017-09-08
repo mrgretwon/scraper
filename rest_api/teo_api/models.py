@@ -3,13 +3,13 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-# Model wygenerowany automatycznie
+# model created by:
 # python manage.py inspectdb > models.py
 
-class Dane(models.Model):
+class Data(models.Model):
     text = models.CharField(max_length=999999, blank=True, null=True)
     author = models.CharField(max_length=999999, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'dane'
+        db_table = 'data'

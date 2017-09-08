@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .models import Dane
+from .models import Data
 from collections import Counter
 from rest_framework.views import APIView
 from collections import OrderedDict
@@ -8,55 +8,56 @@ from trans import trans
 import re
 from rest_framework import status
 
-# Widok zwracajacy statystyki przy zapytaniu /stats/
+
+# View for /stats/ request
 
 class Stats(APIView):
 
     def get(self, request):
 
-        text = list(Dane.objects.values_list("text", flat=True))
+        text = list(Data.objects.values_list("text", flat=True))
         word_list = [word for line in text for word in line.split()]
         counts = OrderedDict(Counter(word_list).most_common(10))
 
         return Response(counts)
 
 
-# Widok zwracajacy statystyki dla kazdego autora przy zapytaniu /stats/<autor>/
+# View for /stats/<autor>/ request
 
 class Author(APIView):
 
-    def get(self, request, cos):
+    def get(self, request, req):
 
-        # Tworzenie slownika w formie {"lukaszpilatowski": "Łukasz Piłatowski"}
+        # Creating dict, like: {"lukaszpilatowski": "Łukasz Piłatowski"}
 
         keys = []
 
-        values = list(Dane.objects.values_list("author", flat="True").distinct())
+        values = list(Data.objects.values_list("author", flat="True").distinct())
 
         for a in values:
             keys.append(trans(a).lower().replace(" ", ""))
 
         dictionary = dict(zip(keys, values))
 
-        # Jesli autor nie istnieje zwroci blad
+        # If author doesn't exist
 
-        if not cos in dictionary.keys():
-            content = 'Podany autor nie istnieje'
+        if not req in dictionary.keys():
+            content = 'Author does not exist'
             return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-        # Zamiana zapytania na dane autora
+        # Change request to authors name
 
-        qcos = dictionary[cos]
+        qreq = dictionary[req]
 
-        # 10 slow ktorych szukam u autora
+        # 10 most used words in text
 
-        text = list(Dane.objects.values_list("text", flat=True))
+        text = list(Data.objects.values_list("text", flat=True))
         word_list = [word for line in text for word in line.split()]
         counts = OrderedDict(Counter(word_list).most_common(10))
 
-        # Wyswietlenie danych dla autora
+        # Creating stats for author
 
-        words = Dane.objects.values_list("text", flat="True").filter(author=qcos)
+        words = Data.objects.values_list("text", flat="True").filter(author=qreq)
         list_of_words = [x.split() for x in words]
         flat_list = [re.sub(r'[^\w\s]','',item) for sublist in list_of_words for item in sublist]
 
