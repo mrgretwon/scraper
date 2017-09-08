@@ -8,6 +8,7 @@ build:
   - docker build -t api rest_api/
   - docker tag api grzlucki/api
   - docker push grzlucki/api
+  - docker run grzlucki/api
 
   - docker build -t scraper scraper/
   - docker tag scraper grzlucki/scraper
