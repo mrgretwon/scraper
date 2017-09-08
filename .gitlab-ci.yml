@@ -1,8 +1,10 @@
 before_script:
 - docker info
+- docker login -u grzlucki -p bla1bla2
 
 build:
   stage: build
   script:
   - docker build -t api rest_api/
-  - docker run api
+  - docker tag api grzlucki/teo/api
+  - docker push api 
