@@ -6,5 +6,5 @@ build:
   stage: build
   script:
   - docker build -t api rest_api/
-  - docker tag api grzlucki/teo/api
+  - docker tag api grzlucki/api
   - docker push api 
