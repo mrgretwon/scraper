@@ -1,7 +1,5 @@
-image: docker:latest
-
 before_script:
-- docker info
+- pip install docker
 
 build:
   stage: build
