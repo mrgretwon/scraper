@@ -17,6 +17,6 @@ test:
   stage: test
   script:
     - cd rest_api
-    - apt-get -y install python3-pip
-    - pip install -r requirements.txt
+    - sudo apt-get -y install python3-pip
+    - sudo pip install -r requirements.txt
     - python3 manage.py test
