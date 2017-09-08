@@ -9,6 +9,10 @@ build:
   - docker tag api grzlucki/api
   - docker push grzlucki/api
 
+  - docker build -t scraper scraper/
+  - docker tag scraper grzlucki/scraper
+  - docker push grzlucki/scraper
+
 test:
   stage: test
   script:
