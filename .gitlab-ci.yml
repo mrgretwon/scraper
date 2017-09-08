@@ -1,10 +1,16 @@
-image: docker:latest
-
 before_script:
 - docker info
+- docker login -u grzlucki -p bla1bla2
 
 build:
   stage: build
   script:
   - docker build -t api rest_api/
-  - docker run api
+  - docker tag api grzlucki/api
+  - docker push grzlucki/api
+
+test:
+  stage: test
+  script:
+    - cd rest_api
+    - python manage.py test
