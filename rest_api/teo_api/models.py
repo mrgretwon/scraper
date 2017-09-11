@@ -7,8 +7,8 @@ from django.db import models
 # python manage.py inspectdb > models.py
 
 class Data(models.Model):
-    text = models.CharField(max_length=999999, blank=True, null=True)
-    author = models.CharField(max_length=999999, blank=True, null=True)
+    text = models.CharField(max_length=20000, blank=True, null=True)
+    author = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
         managed = False

@@ -12,7 +12,7 @@ DATABASE = {
     'host': 'db',
     'port': '5432',
     'username': 'postgres',
-    'password': 'bla1bla2',
+    'password': 'password',
     'database': 'scrape'
 }
 
