@@ -9,20 +9,32 @@ build_api:
   stage: build
   script:
   - docker build -t api rest_api/
+  tags:
+    - docker
+
 
 build_scraper:
   stage: build
   script:
   - docker build -t scraper scraper/
+  tags:
+    - docker
+
 
 push_api:
   stage: push
   script:
   - docker tag api grzlucki/api
   - docker push grzlucki/api
+  tags:
+    - docker
+
 
 push_scraper:
   stage: push
   script:
   - docker tag scraper grzlucki/scraper
   - docker push grzlucki/scraper
+  tags:
+    - docker
+
