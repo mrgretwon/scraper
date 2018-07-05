@@ -10,14 +10,14 @@ build_api:
   script:
   - docker build -t api rest_api/
   tags:
-    - shell
+    - gitlab-org
 
 build_scraper:
   stage: build
   script:
   - docker build -t scraper scraper/
   tags:
-    - shell
+    - gitlab-org
 
 push_api:
   stage: push
@@ -25,7 +25,7 @@ push_api:
   - docker tag api grzlucki/api
   - docker push grzlucki/api
   tags:
-    - shell
+    - gitlab-org
 
 push_scraper:
   stage: push
@@ -33,5 +33,5 @@ push_scraper:
   - docker tag scraper grzlucki/scraper
   - docker push grzlucki/scraper
   tags:
-    - shell
+    - gitlab-org
 
