@@ -1,14 +1,28 @@
-before_script:
-- docker info
-- docker login -u grzlucki -p bla1bla2
+stages:
+  - build
+  - push
 
-build:
+before_script:
+- docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+build_api:
   stage: build
   script:
   - docker build -t api rest_api/
+
+build_scraper:
+  stage: build
+  script:
+  - docker build -t scraper scraper/
+
+push_api:
+  stage: push
+  script:
   - docker tag api grzlucki/api
   - docker push grzlucki/api
 
-  - docker build -t scraper scraper/
+push_scraper:
+  stage: push
+  script:
   - docker tag scraper grzlucki/scraper
   - docker push grzlucki/scraper

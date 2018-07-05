@@ -9,9 +9,23 @@ import re
 from rest_framework import status
 
 
+# View for /authors/ request
+
+class AuthorsListView(APIView):
+
+    def get(self, request):
+
+        authors = [data.author for data in Data.objects.distinct('author')]
+        keys = [trans(author).lower().replace(" ", "") for author in authors]
+
+        result = dict(zip(keys, authors))
+
+        return Response(result)
+
+
 # View for /stats/ request
 
-class Stats(APIView):
+class StatsView(APIView):
 
     def get(self, request):
 
@@ -24,7 +38,7 @@ class Stats(APIView):
 
 # View for /stats/<autor>/ request
 
-class Author(APIView):
+class AuthorView(APIView):
 
     def get(self, request, req):
 

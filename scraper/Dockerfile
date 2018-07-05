@@ -9,6 +9,8 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 MAINTAINER grz.lucki@gmail.com
 
-ADD . .
+ADD . /code
+
+WORKDIR /code/
 
 RUN pip install -r requirements.txt
